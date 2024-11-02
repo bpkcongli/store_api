@@ -40,4 +40,18 @@ class Product extends Model
 
         return $this->update($productId, (object)$data);
     }
+
+    /**
+     * @throws RecordNotFoundException
+     */
+    public function deleteOrFail(string $productId): bool
+    {
+        $product = $this->find($productId);
+
+        if (!$product) {
+            throw new RecordNotFoundException();
+        }
+
+        return $this->delete($productId);
+    }
 }

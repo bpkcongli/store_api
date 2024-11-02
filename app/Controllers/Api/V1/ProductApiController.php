@@ -91,4 +91,24 @@ class ProductApiController extends ResourceController
             ]);
         }
     }
+
+    public function delete($id = null)
+    {
+        try {
+            $model = new Product();
+            $result = $model->deleteOrFail($id);
+            
+            if ($result) {
+                return $this->respond([
+                    'code' => 200,
+                    'message' => 'success',
+                ]);
+            }
+        } catch (RecordNotFoundException $e) {
+            return $this->response->setStatusCode(code: 404)->setJSON([
+                'code' => 404,
+                'message' => 'Produk tidak ditemukan.',
+            ]);
+        }
+    }
 }

@@ -17,5 +17,6 @@ $routes->group('api/v1', function (RouteCollection $routes) {
     $routes->get('/', [ProductApiController::class, 'index']);
     $routes->get('(:uuid)', [ProductApiController::class, 'show/$1']);
     $routes->put('(:uuid)', [ProductApiController::class, 'update/$1']);
+    $routes->delete('(:uuid)', [ProductApiController::class, 'delete/$1']);
   });
 });
