@@ -7,10 +7,12 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+
 $routes->get('/', [Home::class, 'index']);
 
 $routes->group('api/v1', function (RouteCollection $routes) {
   $routes->group('products', function (RouteCollection $routes) {
     $routes->post('/', [ProductApiController::class, 'store']);
+    $routes->get('/', [ProductApiController::class, 'index']);
   });
 });

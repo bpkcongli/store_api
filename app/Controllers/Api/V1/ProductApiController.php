@@ -7,6 +7,18 @@ use CodeIgniter\RESTful\ResourceController;
 
 class ProductApiController extends ResourceController
 {
+    public function index()
+    {
+        $model = new Product();
+        $products = $model->findAll();
+        
+        return $this->respond([
+            'code' => 200,
+            'message' => 'success',
+            'data' => $products,
+        ]);
+    }
+
     public function store()
     {
         $data = [
