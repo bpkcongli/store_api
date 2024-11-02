@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use Ramsey\Uuid\Uuid;
 
 class Product extends Model
 {
@@ -16,9 +17,12 @@ class Product extends Model
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
 
-    protected function beforeInsert(array $data)
+    public function createProduct(array $data): ?string
     {
-        $data['data']['id'] = bin2hex(random_bytes(16));
-        return $data;
+        $uuid = Uuid::uuid4()->toString();
+        $data['id'] = $uuid;
+
+        $result = $this->insert((object)$data);
+        return $result ? $uuid : null;
     }
 }

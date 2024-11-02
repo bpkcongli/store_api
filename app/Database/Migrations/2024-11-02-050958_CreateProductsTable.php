@@ -25,7 +25,8 @@ class CreateProductsTable extends Migration
                 'null' => false,
             ],
             'price' => [
-                'type' => 'INT',
+                'type' => 'DECIMAL',
+                'constraint' => '10,2',
                 'null' => false,
             ],
             'created_at' => [
