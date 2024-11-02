@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\InsertRecordFailedException;
 use App\Exceptions\RecordNotFoundException;
 use CodeIgniter\Model;
 use Ramsey\Uuid\Uuid;
@@ -18,13 +19,22 @@ class Product extends Model
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
 
-    public function createProduct(array $data): ?string
+    /**
+     * @throws InsertRecordFailedException
+     */
+    public function createOrFail(array $data): string
     {
         $uuid = Uuid::uuid4()->toString();
         $data['id'] = $uuid;
 
-        $result = $this->insert((object)$data);
-        return $result ? $uuid : null;
+        $this->insert((object)$data);
+        $product = $this->find($uuid);
+
+        if (!$product) {
+            throw new InsertRecordFailedException();
+        }
+
+        return $uuid;
     }
 
     /**
