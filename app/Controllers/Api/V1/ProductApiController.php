@@ -19,6 +19,18 @@ class ProductApiController extends ResourceController
         ]);
     }
 
+    public function show($id = null)
+    {
+        $model = new Product();
+        $product = $model->find($id);
+        
+        return $this->respond([
+            'code' => 200,
+            'message' => 'success',
+            'data' => $product,
+        ]);
+    }
+
     public function store()
     {
         $data = [
