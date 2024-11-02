@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\RecordNotFoundException;
 use CodeIgniter\Model;
 use Ramsey\Uuid\Uuid;
 
@@ -24,5 +25,19 @@ class Product extends Model
 
         $result = $this->insert((object)$data);
         return $result ? $uuid : null;
+    }
+
+    /**
+     * @throws RecordNotFoundException
+     */
+    public function updateOrFail(string $productId, array $data): bool
+    {
+        $product = $this->find($productId);
+
+        if (!$product) {
+            throw new RecordNotFoundException();
+        }
+
+        return $this->update($productId, (object)$data);
     }
 }

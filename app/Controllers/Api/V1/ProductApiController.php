@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Api\V1;
 
+use App\Exceptions\RecordNotFoundException;
 use App\Models\Product;
 use CodeIgniter\RESTful\ResourceController;
 
@@ -54,6 +55,32 @@ class ProductApiController extends ResourceController
                 'data' => [
                     'id' => $productId,
                 ],
+            ]);
+        }
+    }
+
+    public function update($id = null)
+    {
+        $data = [
+            'code' => $this->request->getVar('code'),
+            'name' => $this->request->getVar('name'),
+            'price' => $this->request->getVar('price'),
+        ];
+
+        try {
+            $model = new Product();
+            $result = $model->updateOrFail($id, $data);
+            
+            if ($result) {
+                return $this->respond([
+                    'code' => 200,
+                    'message' => 'success',
+                ]);
+            }
+        } catch (RecordNotFoundException $e) {
+            return $this->response->setStatusCode(code: 404)->setJSON([
+                'code' => 404,
+                'message' => 'Produk tidak ditemukan.',
             ]);
         }
     }

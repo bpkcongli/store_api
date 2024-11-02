@@ -16,5 +16,6 @@ $routes->group('api/v1', function (RouteCollection $routes) {
     $routes->post('/', [ProductApiController::class, 'store']);
     $routes->get('/', [ProductApiController::class, 'index']);
     $routes->get('(:uuid)', [ProductApiController::class, 'show/$1']);
+    $routes->put('(:uuid)', [ProductApiController::class, 'update/$1']);
   });
 });
