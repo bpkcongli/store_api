@@ -25,11 +25,18 @@ class ProductApiController extends ResourceController
         $model = new Product();
         $product = $model->find($id);
         
-        return $this->respond([
-            'code' => 200,
-            'message' => 'success',
-            'data' => $product,
-        ]);
+        if ($product === null) {
+            return $this->response->setStatusCode(code: 404)->setJSON([
+                'code' => 404,
+                'message' => 'Produk tidak ditemukan.',
+            ]);
+        } else {
+            return $this->respond([
+                'code' => 200,
+                'message' => 'success',
+                'data' => $product,
+            ]);
+        }
     }
 
     public function store()
@@ -53,7 +60,7 @@ class ProductApiController extends ResourceController
                 'code' => 201,
                 'message' => 'Produk berhasil ditambahkan.',
                 'data' => [
-                    'id' => $productId,
+                    'productId' => $productId,
                 ],
             ]);
         }
