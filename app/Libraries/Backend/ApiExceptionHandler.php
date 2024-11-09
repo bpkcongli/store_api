@@ -4,6 +4,7 @@ namespace App\Libraries\Backend;
 
 use App\Exceptions\Backend\InvalidAuthenticationException;
 use App\Exceptions\Backend\InvalidAuthorizationException;
+use App\Exceptions\Backend\RecordNotFoundException;
 use CodeIgniter\Debug\BaseExceptionHandler;
 use CodeIgniter\Debug\ExceptionHandlerInterface;
 use CodeIgniter\HTTP\RequestInterface;
@@ -25,6 +26,12 @@ class ApiExceptionHandler extends BaseExceptionHandler implements ExceptionHandl
 			$response->setJSON([
                 'code' => 403,
                 'message' => 'Anda tidak memiliki akses untuk resource ini.',
+            ]);
+		} else if ($exception instanceof RecordNotFoundException) {
+			$response->setStatusCode(404);
+			$response->setJSON([
+                'code' => 404,
+                'message' => $exception->getMessage(),
             ]);
 		}
 

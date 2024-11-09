@@ -4,7 +4,6 @@ namespace App\Controllers\Api\V1;
 
 use App\Controllers\Api\V1\Authorization\Authority;
 use App\Exceptions\InsertRecordFailedException;
-use App\Exceptions\RecordNotFoundException;
 use CodeIgniter\RESTful\ResourceController;
 
 class ProductApiController extends ResourceController
@@ -84,19 +83,12 @@ class ProductApiController extends ResourceController
             'price' => $this->request->getVar('price'),
         ];
 
-        try {
-            $result = $this->model->updateOrFail($id, $data);
+        $result = $this->model->updateOrFail($id, $data);
             
-            if ($result) {
-                return $this->respond([
-                    'code' => 200,
-                    'message' => 'success',
-                ]);
-            }
-        } catch (RecordNotFoundException $e) {
-            return $this->response->setStatusCode(code: 404)->setJSON([
-                'code' => 404,
-                'message' => 'Produk tidak ditemukan.',
+        if ($result) {
+            return $this->respond([
+                'code' => 200,
+                'message' => 'success',
             ]);
         }
     }
@@ -105,19 +97,12 @@ class ProductApiController extends ResourceController
     {
         $this->authorize();
 
-        try {
-            $result = $this->model->deleteOrFail($id);
+        $result = $this->model->deleteOrFail($id);
             
-            if ($result) {
-                return $this->respond([
-                    'code' => 200,
-                    'message' => 'success',
-                ]);
-            }
-        } catch (RecordNotFoundException $e) {
-            return $this->response->setStatusCode(code: 404)->setJSON([
-                'code' => 404,
-                'message' => 'Produk tidak ditemukan.',
+        if ($result) {
+            return $this->respond([
+                'code' => 200,
+                'message' => 'success',
             ]);
         }
     }

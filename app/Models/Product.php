@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Exceptions\InsertRecordFailedException;
-use App\Exceptions\RecordNotFoundException;
+use App\Exceptions\Backend\RecordNotFoundException;
 use CodeIgniter\Model;
 use Ramsey\Uuid\Uuid;
 
@@ -45,7 +45,7 @@ class Product extends Model
         $product = $this->find($productId);
 
         if (!$product) {
-            throw new RecordNotFoundException();
+            throw new RecordNotFoundException('Produk tidak ditemukan.');
         }
 
         return $this->update($productId, (object)$data);
@@ -59,7 +59,7 @@ class Product extends Model
         $product = $this->find($productId);
 
         if (!$product) {
-            throw new RecordNotFoundException();
+            throw new RecordNotFoundException('Produk tidak ditemukan.');
         }
 
         return $this->delete($productId);

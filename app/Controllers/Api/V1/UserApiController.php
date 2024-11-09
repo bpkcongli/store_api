@@ -2,9 +2,9 @@
 
 namespace App\Controllers\Api\V1;
 
+use App\Exceptions\Backend\RecordNotFoundException;
 use App\Exceptions\InsertRecordFailedException;
 use App\Exceptions\RecordConflictException;
-use App\Exceptions\RecordNotFoundException;
 use App\Helpers\Backend\JwtHelper;
 use CodeIgniter\RESTful\ResourceController;
 
@@ -64,7 +64,7 @@ class UserApiController extends ResourceController
         } catch (RecordNotFoundException $e) {
             return $this->response->setStatusCode(code: 401)->setJSON([
                 'code' => 401,
-                'message' => 'Username atau email tidak terdaftar.',
+                'message' => $e->getMessage(),
             ]);
         }
     }

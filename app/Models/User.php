@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\Exceptions\Backend\InvalidAuthenticationException;
+use App\Exceptions\Backend\RecordNotFoundException;
 use App\Exceptions\InsertRecordFailedException;
 use App\Exceptions\RecordConflictException;
-use App\Exceptions\RecordNotFoundException;
 use CodeIgniter\Model;
 use Ramsey\Uuid\Uuid;
 
@@ -56,7 +56,7 @@ class User extends Model
             ->first();
 
         if (!isset($user)) {
-            throw new RecordNotFoundException();
+            throw new RecordNotFoundException('Username atau email tidak terdaftar.');
         }
 
         if (!password_verify($password, $user['password'])) {
