@@ -4,8 +4,8 @@ namespace App\Models;
 
 use App\Exceptions\Backend\InsertRecordFailedException;
 use App\Exceptions\Backend\InvalidAuthenticationException;
+use App\Exceptions\Backend\RecordConflictException;
 use App\Exceptions\Backend\RecordNotFoundException;
-use App\Exceptions\RecordConflictException;
 use CodeIgniter\Model;
 use Ramsey\Uuid\Uuid;
 
@@ -28,7 +28,7 @@ class User extends Model
     public function createOrFail(array $data): string
     {
         if ($this->isUsernameAlreadyExist($data['username'])) {
-            throw new RecordConflictException();
+            throw new RecordConflictException('Username sudah terdaftar.');
         }
 
         $uuid = Uuid::uuid4()->toString();

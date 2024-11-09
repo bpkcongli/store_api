@@ -5,6 +5,7 @@ namespace App\Libraries\Backend;
 use App\Exceptions\Backend\InsertRecordFailedException;
 use App\Exceptions\Backend\InvalidAuthenticationException;
 use App\Exceptions\Backend\InvalidAuthorizationException;
+use App\Exceptions\Backend\RecordConflictException;
 use App\Exceptions\Backend\RecordNotFoundException;
 use CodeIgniter\Debug\BaseExceptionHandler;
 use CodeIgniter\Debug\ExceptionHandlerInterface;
@@ -32,6 +33,12 @@ class ApiExceptionHandler extends BaseExceptionHandler implements ExceptionHandl
 			$response->setStatusCode(404);
 			$response->setJSON([
                 'code' => 404,
+                'message' => $exception->getMessage(),
+            ]);
+		} else if ($exception instanceof RecordConflictException) {
+			$response->setStatusCode(409);
+			$response->setJSON([
+                'code' => 409,
                 'message' => $exception->getMessage(),
             ]);
 		} else if ($exception instanceof InsertRecordFailedException) {
