@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use App\Exceptions\InvalidAuthorizationException;
+use App\Libraries\Backend\ApiExceptionHandler;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Debug\ExceptionHandler;
 use CodeIgniter\Debug\ExceptionHandlerInterface;
@@ -101,6 +103,10 @@ class Exceptions extends BaseConfig
      */
     public function handler(int $statusCode, Throwable $exception): ExceptionHandlerInterface
     {
+        if ($exception instanceof InvalidAuthorizationException) {
+            return new ApiExceptionHandler($this);
+        }
+
         return new ExceptionHandler($this);
     }
 }

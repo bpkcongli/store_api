@@ -2,16 +2,21 @@
 
 namespace App\Controllers\Api\V1;
 
+use App\Controllers\Api\V1\Authorization\Authority;
 use App\Exceptions\InsertRecordFailedException;
 use App\Exceptions\RecordNotFoundException;
 use CodeIgniter\RESTful\ResourceController;
 
 class ProductApiController extends ResourceController
 {
+    use Authority;
+
     protected $modelName = 'App\Models\Product';
 
     public function index()
     {
+        $this->authorize();
+
         $products = $this->model->findAll();
         
         return $this->respond([
@@ -23,6 +28,8 @@ class ProductApiController extends ResourceController
 
     public function show($id = null)
     {
+        $this->authorize();
+
         $product = $this->model->find($id);
         
         if ($product === null) {
@@ -41,6 +48,8 @@ class ProductApiController extends ResourceController
 
     public function store()
     {
+        $this->authorize();
+
         try {
             $data = [
                 'code' => $this->request->getVar('code'),
@@ -67,6 +76,8 @@ class ProductApiController extends ResourceController
 
     public function update($id = null)
     {
+        $this->authorize();
+
         $data = [
             'code' => $this->request->getVar('code'),
             'name' => $this->request->getVar('name'),
@@ -92,6 +103,8 @@ class ProductApiController extends ResourceController
 
     public function delete($id = null)
     {
+        $this->authorize();
+
         try {
             $result = $this->model->deleteOrFail($id);
             
