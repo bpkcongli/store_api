@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Exceptions\AuthenticationFailedException;
 use App\Exceptions\InsertRecordFailedException;
 use App\Exceptions\RecordConflictException;
+use App\Exceptions\RecordNotFoundException;
 use CodeIgniter\Model;
 use Ramsey\Uuid\Uuid;
 
@@ -41,6 +43,27 @@ class User extends Model
         }
 
         return $uuid;
+    }
+
+    /**
+     * @throws RecordNotFoundException
+     */
+    public function verifyUser(string $username, string $password): array
+    {
+        $user = $this
+            ->where('username', $username)
+            ->orWhere('email', $username)
+            ->first();
+
+        if (!isset($user)) {
+            throw new RecordNotFoundException();
+        }
+
+        if (!password_verify($password, $user['password'])) {
+            throw new AuthenticationFailedException();
+        };
+
+        return $user;
     }
 
     private function isUsernameAlreadyExist(string $username): bool

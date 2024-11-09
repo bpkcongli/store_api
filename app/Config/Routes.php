@@ -15,6 +15,7 @@ $routes->get('/', [Home::class, 'index']);
 $routes->group('api/v1', function (RouteCollection $routes) {
   $routes->group('users', function (RouteCollection $routes) {
     $routes->post('registration', [UserApiController::class, 'registration']);
+    $routes->post('authenticate', [UserApiController::class, 'authenticate']);
   });
 
   $routes->group('products', function (RouteCollection $routes) {
