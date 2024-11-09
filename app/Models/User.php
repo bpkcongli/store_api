@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Exceptions\AuthenticationFailedException;
+use App\Exceptions\Backend\InvalidAuthenticationException;
 use App\Exceptions\InsertRecordFailedException;
 use App\Exceptions\RecordConflictException;
 use App\Exceptions\RecordNotFoundException;
@@ -60,7 +60,7 @@ class User extends Model
         }
 
         if (!password_verify($password, $user['password'])) {
-            throw new AuthenticationFailedException();
+            throw new InvalidAuthenticationException();
         };
 
         return $user;

@@ -2,7 +2,6 @@
 
 namespace App\Controllers\Api\V1;
 
-use App\Exceptions\AuthenticationFailedException;
 use App\Exceptions\InsertRecordFailedException;
 use App\Exceptions\RecordConflictException;
 use App\Exceptions\RecordNotFoundException;
@@ -66,11 +65,6 @@ class UserApiController extends ResourceController
             return $this->response->setStatusCode(code: 401)->setJSON([
                 'code' => 401,
                 'message' => 'Username atau email tidak terdaftar.',
-            ]);
-        } catch (AuthenticationFailedException $e) {
-            return $this->response->setStatusCode(code: 401)->setJSON([
-                'code' => 401,
-                'message' => 'Kredensial yang Anda masukkan tidak sesuai.',
             ]);
         }
     }
