@@ -2,6 +2,7 @@
 
 namespace App\Libraries\Backend;
 
+use App\Exceptions\Backend\InsertRecordFailedException;
 use App\Exceptions\Backend\InvalidAuthenticationException;
 use App\Exceptions\Backend\InvalidAuthorizationException;
 use App\Exceptions\Backend\RecordNotFoundException;
@@ -31,6 +32,12 @@ class ApiExceptionHandler extends BaseExceptionHandler implements ExceptionHandl
 			$response->setStatusCode(404);
 			$response->setJSON([
                 'code' => 404,
+                'message' => $exception->getMessage(),
+            ]);
+		} else if ($exception instanceof InsertRecordFailedException) {
+			$response->setStatusCode(500);
+			$response->setJSON([
+                'code' => 500,
                 'message' => $exception->getMessage(),
             ]);
 		}

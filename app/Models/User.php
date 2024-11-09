@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Exceptions\Backend\InsertRecordFailedException;
 use App\Exceptions\Backend\InvalidAuthenticationException;
 use App\Exceptions\Backend\RecordNotFoundException;
-use App\Exceptions\InsertRecordFailedException;
 use App\Exceptions\RecordConflictException;
 use CodeIgniter\Model;
 use Ramsey\Uuid\Uuid;
@@ -39,7 +39,7 @@ class User extends Model
         $user = $this->find($uuid);
 
         if (!$user) {
-            throw new InsertRecordFailedException();
+            throw new InsertRecordFailedException('Gagal mendaftarkan user.');
         }
 
         return $uuid;

@@ -3,7 +3,6 @@
 namespace App\Controllers\Api\V1;
 
 use App\Exceptions\Backend\RecordNotFoundException;
-use App\Exceptions\InsertRecordFailedException;
 use App\Exceptions\RecordConflictException;
 use App\Helpers\Backend\JwtHelper;
 use CodeIgniter\RESTful\ResourceController;
@@ -34,11 +33,6 @@ class UserApiController extends ResourceController
             return $this->response->setStatusCode(code: 409)->setJSON([
                 'code' => 409,
                 'message' => 'Username sudah terdaftar.',
-            ]);
-        } catch (InsertRecordFailedException $e) {
-            return $this->response->setStatusCode(code: 500)->setJSON([
-                'code' => 500,
-                'message' => 'Gagal mendaftarkan user.',
             ]);
         }
     }

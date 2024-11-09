@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Exceptions\InsertRecordFailedException;
+use App\Exceptions\Backend\InsertRecordFailedException;
 use App\Exceptions\Backend\RecordNotFoundException;
 use CodeIgniter\Model;
 use Ramsey\Uuid\Uuid;
@@ -31,7 +31,7 @@ class Product extends Model
         $product = $this->find($uuid);
 
         if (!$product) {
-            throw new InsertRecordFailedException();
+            throw new InsertRecordFailedException('Gagal menambahkan produk.');
         }
 
         return $uuid;
