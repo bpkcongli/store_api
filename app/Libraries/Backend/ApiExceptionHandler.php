@@ -2,7 +2,7 @@
 
 namespace App\Libraries\Backend;
 
-use App\Exceptions\InvalidAuthorizationException;
+use App\Exceptions\Backend\InvalidAuthorizationException;
 use CodeIgniter\Debug\BaseExceptionHandler;
 use CodeIgniter\Debug\ExceptionHandlerInterface;
 use CodeIgniter\HTTP\RequestInterface;

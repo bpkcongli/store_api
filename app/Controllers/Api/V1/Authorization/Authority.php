@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Api\V1\Authorization;
 
-use App\Exceptions\InvalidAuthorizationException;
+use App\Exceptions\Backend\InvalidAuthorizationException;
 use App\Helpers\Backend\JwtHelper;
 
 trait Authority

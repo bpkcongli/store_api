@@ -2,7 +2,7 @@
 
 namespace Config;
 
-use App\Exceptions\InvalidAuthorizationException;
+use App\Exceptions\Backend\ApiException;
 use App\Libraries\Backend\ApiExceptionHandler;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Debug\ExceptionHandler;
@@ -103,7 +103,7 @@ class Exceptions extends BaseConfig
      */
     public function handler(int $statusCode, Throwable $exception): ExceptionHandlerInterface
     {
-        if ($exception instanceof InvalidAuthorizationException) {
+        if ($exception instanceof ApiException) {
             return new ApiExceptionHandler($this);
         }
 
